@@ -1,12 +1,31 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
-
 const canvasCopy = document.createElement("canvas");
-
-const cc = document.querySelectorAll(".rgb");
-const picked = document.querySelector("#picked");
-
 var img = new Image();
+
+var fileSelector = document.getElementById("fileSelector");
+var flipButton = document.getElementById("flipImage");
+var removeBackgroundButton = document.getElementById("removeBackground");
+var blackAndWhiteButton = document.getElementById("blackAndWhite");
+var changeSaturationSlider = document.getElementById("saturationSlider");
+var cropImageButton = document.getElementById("cropImage");
+var resizeButton = document.getElementById("resizeImage");
+var exportButton = document.getElementById("exportImage");
+
+var cc = document.querySelectorAll(".rgb");
+var picked = document.querySelector("#picked");
+
+
+fileSelector.addEventListener("change", (e) => displayImage());
+flipButton.addEventListener("click", (e) => flipImage());
+removeBackgroundButton.addEventListener("click", (e) => removeBackground());
+blackAndWhiteButton.addEventListener("click", (e) => blackAndWhite());
+changeSaturationSlider.addEventListener("change", (e) => changeSaturation());
+cropImageButton.addEventListener("click", (e) => cropImage());
+exportButton.addEventListener("click", (e) => exportImage());
+resizeButton.addEventListener("click", (e) => resizeImage());
+
+
 
 // file read:
 //     1. reader create
@@ -19,10 +38,9 @@ var img = new Image();
 //             2. canvas lo image ni load chestam.
 
 function displayImage() {
-  const imageInput = document.getElementById("fileInput");
 
   // Check if a file is selected
-  if (imageInput.files && imageInput.files[0]) {
+  if (fileSelector.files && fileSelector.files[0]) {
     const reader = new FileReader();
     reader.onload = function (e) {
       const i = new Image();
@@ -41,7 +59,7 @@ function displayImage() {
         img = i;
       };
     };
-    reader.readAsDataURL(imageInput.files[0]);
+    reader.readAsDataURL(fileSelector.files[0]);
   }
 }
 
@@ -165,7 +183,7 @@ function blackAndWhite() {
 }
 
 function saturateImage() {
-  const saturationLevel = document.querySelector("#saturationSlider").value;
+  const saturationLevel = changeSaturationSlider.value;
   const image = canvas;
   const originalData = canvasCopy
     .getContext("2d")
