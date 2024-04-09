@@ -182,7 +182,7 @@ function blackAndWhite() {
   ctx.putImageData(newImageData, 0, 0);
 }
 
-function saturateImage() {
+function changeSaturation() {
   const saturationLevel = changeSaturationSlider.value;
   const image = canvas;
   const originalData = canvasCopy
